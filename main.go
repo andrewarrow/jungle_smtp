@@ -13,14 +13,17 @@ type Client struct {
 	bufout  *bufio.Writer
 }
 
-func handleClient(client *Client) {
+func handleClient(c *Client) {
 	fmt.Println("here")
+	c.bufout.WriteString("220 Welcome to the Jungle\r\n")
+	c.bufout.Flush()
 }
 
 func main() {
-	listener, _ := net.Listen("tcp", "0.0.0.0:25")
+	listener, _ := net.Listen("tcp", "0.0.0.0:2525")
 
 	for {
+		fmt.Println("waiting...")
 		conn, err := listener.Accept()
 		if err != nil {
 			continue
