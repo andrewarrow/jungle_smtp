@@ -17,6 +17,13 @@ func handleClient(c *Client) {
 	fmt.Println("here")
 	c.bufout.WriteString("220 Welcome to the Jungle\r\n")
 	c.bufout.Flush()
+	reply, err := c.bufin.ReadString('\n')
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(reply)
+	c.bufout.WriteString("250 No one says helo anymore.\r\n")
+	c.bufout.Flush()
 }
 
 func main() {
