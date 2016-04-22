@@ -13,17 +13,31 @@ type Client struct {
 	bufout  *bufio.Writer
 }
 
-func handleClient(c *Client) {
-	fmt.Println("here")
-	c.bufout.WriteString("220 Welcome to the Jungle\r\n")
+func (c *Client) w(s string) {
+	c.bufout.WriteString(s + "\r\n")
 	c.bufout.Flush()
+}
+func (c *Client) r() string {
 	reply, err := c.bufin.ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(reply)
-	c.bufout.WriteString("250 No one says helo anymore.\r\n")
-	c.bufout.Flush()
+	return reply
+}
+
+func handleClient(c *Client) {
+	fmt.Println("here")
+	c.w("220 Welcome to the Jungle")
+	text := c.r()
+	c.w("250 No one says helo anymore")
+	text = c.r()
+	c.w("250 Sender")
+	text = c.r()
+	c.w("250 Recipient")
+	text = c.r()
+	c.w("354 Ok Send data ending with <CRLF>.<CRLF>")
+	text = c.r()
+	fmt.Println(text)
 }
 
 func main() {
