@@ -62,7 +62,11 @@ func handleClient(c *Client) {
 }
 
 func main() {
-	listener, _ := net.Listen("tcp", "0.0.0.0:2525")
+	listener, err := net.Listen("tcp", "0.0.0.0:25")
+	if err != nil {
+		fmt.Println("run as root")
+		return
+	}
 
 	for {
 		fmt.Println("waiting...")
