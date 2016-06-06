@@ -58,6 +58,7 @@ func handleClient(c *Client) {
 			break
 		}
 	}
+  c.w("250 server has transmitted the message")
 	c.conn.Close()
 }
 
